@@ -1,0 +1,295 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    // ─── Dev Server ────────────────────────────────────────────────
+    {
+      "label": "serve",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "exec",
+        "ng",
+        "serve",
+        "--open"
+      ],
+      "group": "build",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "angular"
+      },
+      "problemMatcher": {
+        "owner": "angular",
+        "pattern": {
+          "regexp": "^ERROR in (.*):(\\d+):(\\d+)$",
+          "file": 1,
+          "line": 2,
+          "column": 3
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Building\\.\\.\\.",
+          "endsPattern": "compiled successfully"
+        }
+      }
+    },
+    // ─── Build ─────────────────────────────────────────────────────
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "exec",
+        "ng",
+        "build"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "angular"
+      },
+      "problemMatcher": [
+        "$tsc"
+      ]
+    },
+    {
+      "label": "build:prod",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "exec",
+        "ng",
+        "build",
+        "--configuration=production"
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "angular"
+      },
+      "problemMatcher": [
+        "$tsc"
+      ]
+    },
+    // ─── Test ──────────────────────────────────────────────────────
+    {
+      "label": "test",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "exec",
+        "ng",
+        "test"
+      ],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "angular"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "test:ci",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "exec",
+        "ng",
+        "test",
+        "--watch=false",
+        "--browsers=ChromeHeadless"
+      ],
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "angular"
+      },
+      "problemMatcher": []
+    },
+    // ─── Lint ──────────────────────────────────────────────────────
+    {
+      "label": "lint",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "exec",
+        "ng",
+        "lint"
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "group": "angular"
+      },
+      "problemMatcher": [
+        "$eslint-stylish"
+      ]
+    },
+    {
+      "label": "lint:fix",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "exec",
+        "ng",
+        "lint",
+        "--fix"
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "group": "angular"
+      },
+      "problemMatcher": [
+        "$eslint-stylish"
+      ]
+    },
+    // ─── Generate ──────────────────────────────────────────────────
+    {
+      "label": "generate: component",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "exec",
+        "ng",
+        "generate",
+        "component",
+        "${input:componentPath}"
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "group": "angular"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "generate: service",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "exec",
+        "ng",
+        "generate",
+        "service",
+        "${input:servicePath}"
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "group": "angular"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "generate: pipe",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "exec",
+        "ng",
+        "generate",
+        "pipe",
+        "${input:pipePath}"
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "group": "angular"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "generate: guard",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "exec",
+        "ng",
+        "generate",
+        "guard",
+        "${input:guardPath}"
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "group": "angular"
+      },
+      "problemMatcher": []
+    },
+    // ─── Dependencies ──────────────────────────────────────────────
+    {
+      "label": "install",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "install"
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "group": "angular"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "update: check",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "exec",
+        "ng",
+        "update"
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "group": "angular"
+      },
+      "problemMatcher": []
+    }
+  ],
+  // ─── Inputs ──────────────────────────────────────────────────────
+  "inputs": [
+    {
+      "id": "componentPath",
+      "type": "promptString",
+      "description": "Component path (e.g. components/spending-chart or pages/dashboard)"
+    },
+    {
+      "id": "servicePath",
+      "type": "promptString",
+      "description": "Service path (e.g. services/storage)"
+    },
+    {
+      "id": "pipePath",
+      "type": "promptString",
+      "description": "Pipe path (e.g. pipes/currency-format)"
+    },
+    {
+      "id": "guardPath",
+      "type": "promptString",
+      "description": "Guard path (e.g. guards/auth)"
+    }
+  ]
+}

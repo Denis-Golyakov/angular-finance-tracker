@@ -1,0 +1,9 @@
+[
+  {
+    "id": "cat-1",
+    "name": "Food",
+    "isDefault": true,
+    "color": { "name": "Red", "hex": "#ef4444" },
+    "icon": "🍔"
+  }
+]

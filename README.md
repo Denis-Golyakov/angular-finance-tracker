@@ -1,59 +1,70 @@
 # AngularFinanceTracker
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.2.
+A personal finance tracker built as a learning project to explore the Angular framework.
 
-## Development server
+## Tech stack
 
-To start a local development server, run:
+| Layer            | Technology                          |
+| ---------------- | ----------------------------------- |
+| Framework        | Angular 21 (standalone)             |
+| State management | NgRx Signal Store (`@ngrx/signals`) |
+| Styling          | Tailwind CSS v4 + SCSS              |
+| Charts           | Chart.js via ng2-charts             |
+| Package manager  | pnpm                                |
+| Language         | TypeScript                          |
+
+## Features
+
+- **Dashboard** — spending summary, category breakdown chart, budget progress overview
+- **Transactions** — log income and expense transactions, filter by category and date
+- **Budgets** — set monthly spending limits per category, track progress in real time
+- **Settings** — manage categories with custom names, colors, and icons
+
+All data is persisted to `localStorage` — no backend required.
+
+## Angular concepts covered
+
+- Standalone components and `bootstrapApplication()`
+- Angular Router with lazy-loaded routes
+- NgRx Signal Store — `signalStore()`, `withState()`, `withComputed()`, `withMethods()`
+- Reactive Forms — `FormBuilder`, `FormGroup`, `Validators`
+- Dependency Injection with `inject()`
+- Signal-based component inputs/outputs (`input()` / `output()`)
+- Angular 17 control flow (`@if`, `@for`)
+
+## Getting started
+
+### Prerequisites
+
+- Node.js v18.19+ or v20+
+- pnpm
+
+### Install
 
 ```bash
-ng serve
+pnpm install
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Dev server
 
 ```bash
-ng generate component component-name
+ng serve --open
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Open [http://localhost:4200](http://localhost:4200).
+
+### Build
 
 ```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
+# Development
 ng build
+
+# Production
+ng build --configuration=production
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+### Lint
 
 ```bash
-ng test
+ng lint
 ```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

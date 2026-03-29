@@ -1,9 +1,37 @@
 [
   {
     "id": "cat-1",
-    "name": "Food",
+    "name": "Groceries",
     "isDefault": true,
-    "color": { "name": "Red", "hex": "#ef4444" },
-    "icon": "🍔"
+    "color": "green-500",
+    "icon": "heroicons:shopping-cart"
+  },
+  {
+    "id": "cat-2",
+    "name": "Services",
+    "isDefault": true,
+    "color": "blue-500",
+    "icon": "heroicons:wrench-screwdriver"
+  },
+  {
+    "id": "cat-3",
+    "name": "Leisure",
+    "isDefault": true,
+    "color": "pink-400",
+    "icon": "heroicons:musical-note"
+  },
+  {
+    "id": "cat-4",
+    "name": "Hobby",
+    "isDefault": true,
+    "color": "yellow-500",
+    "icon": "heroicons:puzzle-piece"
+  },
+  {
+    "id": "cat-5",
+    "name": "Other",
+    "isDefault": true,
+    "color": "purple-400",
+    "icon": "heroicons:ellipsis-horizontal-circle"
   }
 ]

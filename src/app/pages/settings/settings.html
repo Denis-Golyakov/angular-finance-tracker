@@ -1,0 +1,41 @@
+<div class="mb-6">
+    <h2 class="mb-1 text-3xl font-bold tracking-tight text-heading md:text-3xl lg:text-5xl">Settings</h2>
+    <p class="text-sm font-normal text-body lg:text-sm px-1">Categories: {{ store.items().length }}</p>
+</div>
+
+<ul class="max-w-md divide-y divide-default">
+@for (category of store.items(); track category.id) {
+    <li class="p-3 sm:p-4 border-b border-default hover:bg-gray-800">
+        <div class="flex items-center space-x-2 rtl:space-x-reverse text-{{ category.color }}">
+            <div class="shrink-0">
+            @if(category.icon) {
+                <iconify-icon [attr.icon]="category.icon" width="20" height="20" />
+            }
+            </div>
+            <div class="min-w-0 font-medium text-heading">
+                {{ category.name }}
+            </div>
+            <div class="inline-flex items-right text-base font-semibold text-heading">
+            @if(!category.isDefault) {
+                <button type="button" (click)="deleteCategory(category.id)"
+                    class="inline-flex items-center justify-center text-fg-brand bg-neutral-primary border border-brand hover:bg-brand hover:text-white focus:ring-4 focus:ring-brand-subtle rounded-base w-9 h-9 focus:outline-none">
+                    <iconify-icon icon="heroicons:trash" width="20" height="20" />
+                </button>                    
+            }
+            </div>
+        </div>
+    </li>
+}
+    <li class="p-3 sm:p-4">
+    @if(!categoryFormVisible) {
+        <button type="button" (click)="toggleCategoryForm()"
+            class="inline-flex items-center  text-white bg-brand hover:bg-brand-strong box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
+            <iconify-icon icon="heroicons:plus" width="20" height="20" />
+            Add Category
+        </button>
+    } @else {
+        <category-form [categoryFormData]="categoryFormData" (onSubmit)="addCategory($event)"
+            (onCancel)="toggleCategoryForm()"></category-form>
+    }
+    </li>
+</ul>

@@ -1,0 +1,24 @@
+<form #f="ngForm" (ngSubmit)="onSubmitEvent()">
+    <div class="mb-4">
+        <label for="name" class="block mb-2 text-sm font-medium text-gray-100">Name</label>
+        <input type="text" id="name" name="name"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-brand-medium focus:border-brand-medium block w-full p-2.5"
+            placeholder="" required [(ngModel)]="name">
+    </div>
+    <div class="mb-4">
+        <label for="color" class="block mb-2 text-sm font-medium text-gray-100">Color</label>
+        <ng-select name="color" id="color" [items]="colors" [(ngModel)]="selectedColor"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-brand-medium focus:border-brand-medium block w-full p-2.5 pb-0"
+            bindLabel="name" bindValue="class">
+            <ng-template ng-label-tmp let-item="item">
+                <color-select-item [item]="item"></color-select-item>
+            </ng-template>
+            <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                <color-select-item [item]="item"></color-select-item>
+            </ng-template>
+        </ng-select>
+    </div>
+    <category-icon-search [item]="icon" (onChange)="iconChange($event)"></category-icon-search>
+    <button type="submit" class="w-full text-white bg-gray-700 hover:bg-gray-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+        [disabled]="!f.valid">Save</button>
+</form>

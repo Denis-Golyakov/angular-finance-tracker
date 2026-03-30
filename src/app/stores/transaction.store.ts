@@ -7,20 +7,19 @@ import {
     withMethods,
     withState
 } from '@ngrx/signals';
-import { Category } from '@/models/category.model';
-import seedCategories from '@/data/categories.seed.json';
+import { Transaction } from '@/models/transaction.model';
 import { StorageService } from '@/services/storage.service';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
 
-const STORAGE_CATEGORY_KEY = 'categories';
+const STORAGE_TRANSACTION_KEY = 'transactions';
 
-export const CategoryStore = signalStore(
+export const TransactionStore = signalStore(
     { providedIn: 'root' },
 
-    withDevtools('categories'),
+    withDevtools('transactions'),
 
     withState({
-        items: seedCategories as Category[],
+        items: [] as Transaction[],
         isLoading: false
     }),
 
@@ -32,38 +31,37 @@ export const CategoryStore = signalStore(
         setLoading(status: boolean): void {
             patchState(store, { isLoading: status })
         },
-        findById(id: string): Category | undefined {
+        findById(id: string): Transaction | undefined {
             return store.items().find((item) => item.id === id)
         }
     })),
 
     withMethods((store) => ({
-        add(categoryData: Omit<Category, 'id' | 'isDefault'>): void {
-            const category: Category = {
+        add(transactionData: Omit<Transaction, 'id'>): void {
+            const transaction: Transaction = {
                 id: crypto.randomUUID(),
-                isDefault: false,
-                ...categoryData
+                ...transactionData
             }
-            patchState(store, { items: [...store.items(), category] })
+            patchState(store, { items: [...store.items(), transaction] })
         },
         remove(id: string): boolean {
             const item = store.findById(id)
-            if (typeof item === 'undefined' || item.isDefault) {
+            if (typeof item === 'undefined') {
                 return false;
             }
 
             patchState(store, { items: store.items().filter((item) => item.id !== id) })
             return true
         },
-        update(id: string, changes: Partial<Omit<Category, 'id' | 'isDefault'>>): boolean {
+        update(id: string, changes: Partial<Omit<Transaction, 'id'>>): boolean {
             const item = store.findById(id)
-            if (typeof item === 'undefined' || item.isDefault) {
+            if (typeof item === 'undefined') {
                 return false;
             }
 
             patchState(store, {
-                items: store.items().map((category) => category.id === id ? { ...category, ...changes } : category)
-            });
+                items: store.items().map((transaction) => transaction.id === id ? { ...transaction, ...changes } : transaction)
+            })
             return true
         }
     })),
@@ -73,9 +71,9 @@ export const CategoryStore = signalStore(
 
         return {
             onInit() {
-                const savedCategories = storage.getItem<Category[]>(STORAGE_CATEGORY_KEY);
-                if (savedCategories) {
-                    patchState(store, { items: savedCategories })
+                const savedTransactions = storage.getItem<Transaction[]>(STORAGE_TRANSACTION_KEY);
+                if (savedTransactions) {
+                    patchState(store, { items: savedTransactions })
                 }
 
                 effect(() => {
@@ -83,11 +81,11 @@ export const CategoryStore = signalStore(
 
                     untracked(() => {
                         store.setLoading(true);
-                        storage.setItem(STORAGE_CATEGORY_KEY, items);
+                        storage.setItem(STORAGE_TRANSACTION_KEY, items);
                         store.setLoading(false);
                     })
                 });
             }
         }
     })
-);
+)

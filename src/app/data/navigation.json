@@ -1,4 +1,5 @@
 [
   { "label": "Dashboard", "route": "/dashboard", "icon": "heroicons:chart-pie" },
+  { "label": "Transaction", "route": "/transactions", "icon": "heroicons:wallet" },
   { "label": "Settings", "route": "/settings", "icon": "heroicons:cog-6-tooth" }
 ]

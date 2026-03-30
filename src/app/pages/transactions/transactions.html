@@ -1,0 +1,93 @@
+<div class="relative bg-gray-800 shadow-sm rounded-lg border border-gray-700">
+    <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
+        <div class="w-1/4">
+            <form class="flex items-center">
+                <label for="transaction-search" class="sr-only">Search</label>
+                <div class="relative w-full">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <iconify-icon icon="heroicons-outline:search" width="20" height="20" />
+                    </div>
+                    <input type="text" id="transaction-search" name="transaction-search" [(ngModel)]="filterByDescription"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Search" required="">
+                </div>
+            </form>
+        </div>
+        <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
+            <button type="button" (click)="showNewTransactionModal()" 
+                class="flex cursor-pointer items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                <iconify-icon icon="heroicons-outline:plus" class="mr-2" width="20" height="20" />
+                New Transaction
+            </button>
+            <div class="flex items-center space-x-3 w-full md:w-auto">
+                <fb-dropdown icon="heroicons-outline:filter" [label]="filterByTypeLabel()" [items]="filterByTypeItems" (onItemSelected)="setFilterByType($event)" />
+            </div>
+        </div>
+    </div>
+    <table class="w-full text-sm text-left font-medium rtl:text-right text-gray-400">
+        <thead class="text-sm text-gray-400 bg-gray-700 border-b border-t border-gray-500">
+            <tr>
+                <th class="w-2"></th>
+                <th scope="col" class="px-6 py-3">
+                    Category
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Type
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Amount
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Date
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Description
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    <!-- Action -->
+                    &nbsp; 
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        @for (transaction of transactionList(); track transaction.id) {
+            <tr class="bg-gray-800 border-b border-gray-700 text-white hover:bg-gray-700">
+                <td class="w-2 bg-{{ transaction.category?.color }}"></td>
+                <td class="px-6 py-4">
+                    <iconify-icon [attr.icon]="transaction.category?.icon" width="14" height="14" />
+                    {{ transaction.category?.name }}
+                </td>
+                <td class="px-6 py-4 capitalize">
+                    {{ transaction.type}}
+                </td>
+                <td class="px-6 py-4">
+                    {{ transaction.amount | currency: 'EUR' }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ transaction.date }}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    {{ transaction.description }}
+                </td>
+                <td class="px-6 py-4 text-right">
+                    <button type="button" (click)="editTransaction(transaction.id)"
+                        class="inline-flex items-center justify-center text-blue-400 bg-neutral-blue border border-brand hover:bg-brand hover:text-white focus:ring-4 focus:ring-blue-500-subtle rounded-lg w-9 h-9 focus:outline-none mr-2">
+                        <iconify-icon icon="heroicons:pencil" width="20" height="20" />
+                    </button>
+                    <button type="button" (click)="confirmDeleteTransaction(transaction.id)"
+                        class="inline-flex cursor-pointer items-center justify-center text-blue-400 bg-neutral-blue border border-brand hover:bg-brand hover:text-white focus:ring-4 focus:ring-blue-500-subtle rounded-lg w-9 h-9 focus:outline-none">
+                        <iconify-icon icon="heroicons:trash" width="20" height="20" />
+                    </button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+@if (modalVisible()) {
+    <transaction-modal [title]="modalTitle()" [data]="modalFormData()" (onClose)="closeModal()" (onSave)="saveTransactionData($event)" />
+}
+@if (promptVisible()) {
+    <prompt-modal message="Are you sure you want to delete this transaction?" confirmText="Delete" cancelText="Cancel" (onConfirm)="deleteTransaction()" (onCancel)="closePrompt()" />
+}
+</div>
+

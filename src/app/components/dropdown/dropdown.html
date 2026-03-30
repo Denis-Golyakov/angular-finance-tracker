@@ -1,0 +1,18 @@
+<button type="button" (click)="toggleDropdown()"
+    class="shrink-0 cursor-pointer inline-flex items-center justify-center text-gray-400 bg-gray-700 box-border border border-gray-500 hover:bg-gray-500 hover:text-white shadow-sm font-medium leading-5 rounded-lg text-sm px-3 py-2 focus:outline-none">
+    <iconify-icon [attr.icon]="icon()" width="16" height="16" class="mr-2" />
+    {{ label() }}
+    <iconify-icon [attr.icon]="chevronIcon" width="20" height="20" class="ml-2" />
+</button>
+
+@if(isToggled()) {
+    <div class="absolute z-10 bg-gray-800 border border-gray-500 rounded-lg shadow-lg w-32">
+        <ul class="p-2 text-sm text-gray-400 font-medium">
+        @for(item of items(); track item.label) {
+            <li>
+                <button type="button" (click)="onItemSelectedEvent(item.event)" class="inline-flex items-center cursor-pointer w-full p-2 hover:bg-gray-500 hover:text-white rounded">{{ item.label }}</button>
+            </li>
+        }
+        </ul>
+    </div>
+}

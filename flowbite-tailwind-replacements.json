@@ -1,0 +1,50 @@
+{
+  "bg-neutral-primary-soft": "bg-gray-800",
+  "bg-neutral-primary-medium": "bg-gray-800",
+  "bg-neutral-primary-strong": "bg-gray-700",
+  "bg-neutral-primary": "bg-gray-800",
+
+  "bg-neutral-secondary-soft": "bg-gray-800",
+  "bg-neutral-secondary-medium": "bg-gray-700",
+  "bg-neutral-secondary-strong": "bg-gray-500",
+
+  "bg-neutral-tertiary-soft": "bg-gray-700",
+  "bg-neutral-tertiary-medium": "bg-gray-500",
+  "bg-neutral-tertiary-strong": "bg-gray-300",
+
+  "bg-brand-strong": "bg-blue-700",
+  "bg-brand": "bg-blue-600",
+
+  "border-default-soft": "border-gray-800",
+  "border-default-medium": "border-gray-500",
+  "border-default-strong": "border-gray-300",
+  "border-default": "border-gray-700",
+  "border-brand": "border-blue-500",
+
+  "text-body-soft": "text-gray-500",
+  "text-body-strong": "text-gray-300",
+  "text-body": "text-gray-400",
+
+  "text-heading-soft": "text-gray-500",
+  "text-heading-strong": "text-gray-200",
+  "text-heading": "text-white",
+
+  "text-fg-brand": "text-blue-400",
+  "bg-bg-brand": "bg-blue-600",
+
+  "hover:bg-bg-brand": "hover:bg-blue-700",
+  "hover:bg-neutral-secondary-medium": "hover:bg-gray-700",
+  "hover:bg-brand": "hover:bg-blue-600",
+
+  "focus:ring-brand-soft": "focus:ring-blue-400",
+  "focus:ring-brand-medium": "focus:ring-blue-400",
+  "focus:ring-brand-subtle": "focus:ring-blue-300",
+  "focus:ring-brand": "focus:ring-blue-500",
+
+  "rounded-base": "rounded-lg",
+  "rounded-xs": "rounded-sm",
+
+  "shadow-xs": "shadow-sm",
+
+  "placeholder:text-body": "placeholder:text-gray-500"
+}

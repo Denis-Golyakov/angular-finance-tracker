@@ -22,6 +22,7 @@
     "@ng-select/ng-select": "^21.5.2",
     "@ngrx/signals": "^21.0.1",
     "chart.js": "^4.5.1",
+    "date-fns": "^4.1.0",
     "iconify-icon": "^3.0.2",
     "ng2-charts": "^10.0.0",
     "rxjs": "~7.8.0",

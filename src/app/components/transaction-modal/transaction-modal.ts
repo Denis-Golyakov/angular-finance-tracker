@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, input, output, signal } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { Transaction } from '@/models/transaction.model';

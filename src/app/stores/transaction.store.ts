@@ -66,6 +66,26 @@ export const TransactionStore = signalStore(
         }
     })),
 
+    withMethods((store) => ({
+        getTotalAmountPerCategoryWithinDateRange(categoryId: string, startDate: number, endDate: number): number {
+            const items = store.items()
+                .filter((item) => item.categoryId === categoryId)
+                .filter((item) => parseInt(item.date) >= startDate && parseInt(item.date) <= endDate);
+
+            let total = 0;
+
+            items.forEach((item) => {
+                if (item.type === 'expense') {
+                    total += item.amount;
+                } else {
+                    total -= item.amount;
+                }
+            });
+
+            return total;
+        }
+    })),
+
     withHooks((store) => {
         const storage = inject(StorageService);
 

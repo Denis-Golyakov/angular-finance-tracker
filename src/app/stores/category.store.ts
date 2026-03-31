@@ -1,3 +1,4 @@
+import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { computed, effect, inject, untracked } from '@angular/core';
 import {
     patchState,
@@ -7,10 +8,11 @@ import {
     withMethods,
     withState
 } from '@ngrx/signals';
+
 import { Category } from '@/models/category.model';
 import seedCategories from '@/data/categories.seed.json';
+
 import { StorageService } from '@/services/storage.service';
-import { withDevtools } from '@angular-architects/ngrx-toolkit';
 
 const STORAGE_CATEGORY_KEY = 'categories';
 

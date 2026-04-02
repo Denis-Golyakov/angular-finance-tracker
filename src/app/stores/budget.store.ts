@@ -8,7 +8,7 @@ import {
     withMethods,
     withState
 } from '@ngrx/signals';
-import { getUnixTime, parse } from 'date-fns';
+import { endOfDay, endOfMonth, getUnixTime, isWithinInterval, parse, startOfMonth } from 'date-fns';
 
 import { BudgetItem } from '@/models/budget.model';
 
@@ -27,6 +27,14 @@ export const BudgetStore = signalStore(
         isLoading: false
     }),
 
+    withMethods(() => ({
+        getItemDateRange(item: BudgetItem): { start: Date, end: Date } {
+            const startDate = parse(item.daterange_start, 'yyyy-MM-dd', new Date());
+            const endDate = endOfDay(parse(item.daterange_end, 'yyyy-MM-dd', new Date()));
+            return { start: startDate, end: endDate }
+        }
+    })),
+
     withComputed((store) => {
         const transactionStore = inject(TransactionStore);
 
@@ -34,13 +42,44 @@ export const BudgetStore = signalStore(
             budgetTotals: computed(() => {
                 return store.items()
                     .reduce((acc, budgetItem) => {
-                        const dateRangeStart = getUnixTime(parse(budgetItem.daterange_start, 'yyyy-MM-dd', new Date()));
-                        const dateRangeEnd = getUnixTime(parse(budgetItem.daterange_end, 'yyyy-MM-dd', new Date()));
-                        const total = transactionStore.getTotalAmountPerCategoryWithinDateRange
+                        const dateRange = store.getItemDateRange(budgetItem);
+                        const dateRangeStart = getUnixTime(dateRange.start);
+                        const dateRangeEnd = getUnixTime(dateRange.end);
+
+                        acc[budgetItem.id] = transactionStore.getTotalAmountPerCategoryWithinDateRange
                             (budgetItem.categoryId, dateRangeStart, dateRangeEnd);
-                        acc[budgetItem.id] = total;
                         return acc;
                     }, {} as Record<string, number>);
+            })
+        }
+    }),
+
+    withComputed((store) => {
+        const transactionStore = inject(TransactionStore);
+
+        return {
+            currentMonthBudget: computed(() => {
+                const today = new Date();
+                const currentMonthStart = getUnixTime(startOfMonth(today));
+                const currentMonthEnd = getUnixTime(endOfMonth(today));
+                let monthBudget = {
+                    total: 0,
+                    transactions: 0,
+                    available: 0
+                };
+                store.items().forEach((budgetItem) => {
+                    const dateRange = store.getItemDateRange(budgetItem);
+
+                    if (isWithinInterval(today, { start: dateRange.start, end: dateRange.end })) {
+                        monthBudget.total += budgetItem.amount
+                        monthBudget.transactions += transactionStore.getTotalAmountPerCategoryWithinDateRange
+                            (budgetItem.categoryId, currentMonthStart, currentMonthEnd);
+                    }
+                });
+                monthBudget.available = monthBudget.total > monthBudget.transactions
+                    ? monthBudget.total - monthBudget.transactions : 0;
+
+                return monthBudget;
             })
         }
     }),

@@ -1,3 +1,4 @@
+import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { computed, effect, inject, untracked } from '@angular/core';
 import {
     patchState,
@@ -7,11 +8,21 @@ import {
     withMethods,
     withState
 } from '@ngrx/signals';
-import { Transaction } from '@/models/transaction.model';
+
+import { format, fromUnixTime } from 'date-fns';
+
+import { Transaction, TransactionView } from '@/models/transaction.model';
+import { CategoryStore } from './category.store';
+
 import { StorageService } from '@/services/storage.service';
-import { withDevtools } from '@angular-architects/ngrx-toolkit';
 
 const STORAGE_TRANSACTION_KEY = 'transactions';
+
+interface MonthlyBreakdownItem {
+    id: string,
+    month: string,
+    value: number
+}
 
 export const TransactionStore = signalStore(
     { providedIn: 'root' },
@@ -23,8 +34,58 @@ export const TransactionStore = signalStore(
         isLoading: false
     }),
 
+    withMethods(() => ({
+        getMonthlyBreakdown(items: Transaction[]): MonthlyBreakdownItem[] {
+            let monthlyBreakdown = {} as Record<string, MonthlyBreakdownItem>;
+            let months = [] as string[];
+            let result = [] as MonthlyBreakdownItem[];
+
+            items.forEach((item) => {
+                const date = fromUnixTime(parseInt(item.date));
+                const monthId = format(date, 'yyyyMM');
+                const month = format(date, 'MMMM, yyyy');
+                if (Object.hasOwn(monthlyBreakdown, monthId)) {
+                    monthlyBreakdown[monthId].value += item.amount
+                } else {
+                    months.push(monthId);
+                    monthlyBreakdown[monthId] = { id: monthId, month: month, value: item.amount }
+                }
+            });
+
+            months.sort((a, b) => {
+                return parseInt(b) - parseInt(a);
+            });
+
+            months.forEach((monthId) => {
+                result.push(monthlyBreakdown[monthId]);
+            });
+
+            return result;
+        }
+    })),
+
     withComputed((store) => ({
-        totalCount: computed(() => store.items().length)
+        totalCount: computed(() => store.items().length),
+        totalIncome: computed(() => {
+            return store.items()
+                .filter((item) => item.type === 'income')
+                .reduce((acc, item) => acc + item.amount, 0);
+        }),
+        totalExpenses: computed(() => {
+            return store.items()
+                .filter((item) => item.type === 'expense')
+                .reduce((acc, item) => acc + item.amount, 0);
+        }),
+        monthlyIncome: computed(() =>
+            store.getMonthlyBreakdown(store.items().filter((item) => item.type === 'income'))
+        ),
+        monthlyExpenses: computed(() =>
+            store.getMonthlyBreakdown(store.items().filter((item) => item.type === 'expense'))
+        )
+    })),
+
+    withComputed((store) => ({
+        currentBalance: computed(() => store.totalIncome() - store.totalExpenses())
     })),
 
     withMethods((store) => ({ // Common methods
@@ -85,6 +146,45 @@ export const TransactionStore = signalStore(
             return total;
         }
     })),
+
+    withMethods((store) => {
+        const categoryStore = inject(CategoryStore);
+
+        return {
+            getFormattedItems(
+                direction: 'asc' | 'desc' = 'asc',
+                filterByType: 'all' | string = 'all',
+                filterByDescription: string = '',
+                limit: null | number = null
+            ): TransactionView[] {
+                let items = [...store.items()]
+                    .filter((item) =>
+                        filterByType === 'all' || item.type === filterByType
+                    )
+                    .filter((item) =>
+                        filterByDescription === '' || item.description.toLowerCase().includes(filterByDescription.toLowerCase())
+                    )
+                    .sort((a, b) => {
+                        if (direction === 'asc') {
+                            return Number(a.date) - Number(b.date);
+                        } else {
+                            return Number(b.date) - Number(a.date);
+                        }
+                    })
+                    .map((item) => ({
+                        ...item,
+                        category: categoryStore.findById(item.categoryId),
+                        date: format(fromUnixTime(Number(item.date)), 'dd MMM yyyy')
+                    }));
+
+                if (limit) {
+                    items = items.slice(0, limit);
+                }
+
+                return items;
+            }
+        }
+    }),
 
     withHooks((store) => {
         const storage = inject(StorageService);

@@ -1,4 +1,4 @@
-import { Component, computed, CUSTOM_ELEMENTS_SCHEMA, inject, signal } from '@angular/core';
+import { Component, computed, CUSTOM_ELEMENTS_SCHEMA, inject, Signal, signal } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -7,7 +7,7 @@ import { fromUnixTime, format, getUnixTime, parse } from "date-fns";
 import { CategoryStore } from '@/stores/category.store';
 import { TransactionStore } from '@/stores/transaction.store';
 
-import { Transaction } from '@/models/transaction.model';
+import { Transaction, TransactionView } from '@/models/transaction.model';
 import { DropdownItem } from '@/models/dropdown-item.model';
 
 import { Dropdown } from '@/components/dropdown/dropdown';
@@ -25,20 +25,7 @@ export class Transactions {
   readonly store = inject(TransactionStore)
   readonly categoryStore = inject(CategoryStore)
 
-  transactionList = computed(() =>
-    this.store.items()
-      .map((item) => ({
-        ...item,
-        category: this.categoryStore.findById(item.categoryId),
-        date: format(fromUnixTime(parseInt(item.date)), 'dd MMM yyyy')
-      }))
-      .filter((item) =>
-        this.filterByType() === 'all' || item.type === this.filterByType()
-      )
-      .filter((item) =>
-        this.filterByDescription() === '' || item.description.toLowerCase().includes(this.filterByDescription().toLowerCase())
-      )
-  )
+  transactionList: Signal<TransactionView[]> = computed(() => this.store.getFormattedItems('desc', this.filterByType(), this.filterByDescription()))
 
   filterByTypeItems: DropdownItem[] = [
     { label: 'All', event: 'all' },

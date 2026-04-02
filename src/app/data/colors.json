@@ -7,9 +7,9 @@
   { "name": "Red", "class": "red-500", "hex": "#F05252" },
   { "name": "Dark Red", "class": "red-800", "hex": "#9B1C1C" },
 
-  { "name": "Light Yellow", "class": "amber-200", "hex": "#FCE96A" },
-  { "name": "Yellow", "class": "amber-500", "hex": "#C27803" },
-  { "name": "Dark Yellow", "class": "amber-800", "hex": "#723B13" },
+  { "name": "Light Yellow", "class": "yellow-200", "hex": "#FCE96A" },
+  { "name": "Yellow", "class": "yellow-500", "hex": "#C27803" },
+  { "name": "Dark Yellow", "class": "yellow-800", "hex": "#723B13" },
 
   { "name": "Light Green", "class": "green-200", "hex": "#BCF0DA" },
   { "name": "Green", "class": "green-500", "hex": "#0E9F6E" },
@@ -24,10 +24,10 @@
   { "name": "Dark Indigo", "class": "indigo-800", "hex": "#42389D" },
 
   { "name": "Light Purple", "class": "purple-200", "hex": "#DCD7FE" },
-  { "name": "Purple", "class": "purple-500", "hex": "#9061F9" },
+  { "name": "Purple", "class": "purple-400", "hex": "#9061F9" },
   { "name": "Dark Purple", "class": "purple-800", "hex": "#5521B5" },
 
   { "name": "Light Pink", "class": "pink-200", "hex": "#FAD1E8" },
-  { "name": "Pink", "class": "pink-500", "hex": "#E74694" },
+  { "name": "Pink", "class": "pink-400", "hex": "#E74694" },
   { "name": "Dark Pink", "class": "pink-800", "hex": "#99154B" }
 ]

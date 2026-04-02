@@ -1,1 +1,5 @@
 @import 'tailwindcss';
+@import 'flowbite';
+@safelist {
+  pattern: /^bg-(gray|red|amber|green|blue|indigo|purple|pink|yellow)- (200|500|400|800) $/;
+}

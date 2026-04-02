@@ -1,0 +1,19 @@
+<div class="mb-4">
+    <label for="icon" class="block mb-2 text-sm font-medium text-gray-100">Icon</label>
+    <ng-select [items]="icons" 
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-brand-medium focus:border-brand-medium block w-full p-2.5"
+        [typeahead]="typeahead" 
+        [loading]="loading" 
+        bindValue="icon" 
+        [(ngModel)]="selectedIcon"
+        (change)="onChangeEvent($event)"
+        name="icon" 
+        placeholder="">
+        <ng-template ng-label-tmp let-item="item">
+            <category-icon-search-item [item]="item"></category-icon-search-item>
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+            <category-icon-search-item [item]="item"></category-icon-search-item>
+        </ng-template>
+    </ng-select>
+</div>

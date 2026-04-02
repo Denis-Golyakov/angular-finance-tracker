@@ -15,7 +15,7 @@
       "group": "build",
       "isBackground": true,
       "presentation": {
-        "reveal": "always",
+        "reveal": "never",
         "panel": "dedicated",
         "group": "angular"
       },
@@ -57,26 +57,26 @@
         "$tsc"
       ]
     },
-    {
-      "label": "build:prod",
-      "type": "shell",
-      "command": "pnpm",
-      "args": [
-        "exec",
-        "ng",
-        "build",
-        "--configuration=production"
-      ],
-      "group": "build",
-      "presentation": {
-        "reveal": "always",
-        "panel": "dedicated",
-        "group": "angular"
-      },
-      "problemMatcher": [
-        "$tsc"
-      ]
-    },
+    // {
+    //   "label": "build:prod",
+    //   "type": "shell",
+    //   "command": "pnpm",
+    //   "args": [
+    //     "exec",
+    //     "ng",
+    //     "build",
+    //     "--configuration=production"
+    //   ],
+    //   "group": "build",
+    //   "presentation": {
+    //     "reveal": "always",
+    //     "panel": "dedicated",
+    //     "group": "angular"
+    //   },
+    //   "problemMatcher": [
+    //     "$tsc"
+    //   ]
+    // },
     // ─── Test ──────────────────────────────────────────────────────
     {
       "label": "test",
@@ -119,45 +119,45 @@
       "problemMatcher": []
     },
     // ─── Lint ──────────────────────────────────────────────────────
-    {
-      "label": "lint",
-      "type": "shell",
-      "command": "pnpm",
-      "args": [
-        "exec",
-        "ng",
-        "lint"
-      ],
-      "group": "build",
-      "presentation": {
-        "reveal": "always",
-        "panel": "shared",
-        "group": "angular"
-      },
-      "problemMatcher": [
-        "$eslint-stylish"
-      ]
-    },
-    {
-      "label": "lint:fix",
-      "type": "shell",
-      "command": "pnpm",
-      "args": [
-        "exec",
-        "ng",
-        "lint",
-        "--fix"
-      ],
-      "group": "build",
-      "presentation": {
-        "reveal": "always",
-        "panel": "shared",
-        "group": "angular"
-      },
-      "problemMatcher": [
-        "$eslint-stylish"
-      ]
-    },
+    // {
+    //   "label": "lint",
+    //   "type": "shell",
+    //   "command": "pnpm",
+    //   "args": [
+    //     "exec",
+    //     "ng",
+    //     "lint"
+    //   ],
+    //   "group": "build",
+    //   "presentation": {
+    //     "reveal": "always",
+    //     "panel": "shared",
+    //     "group": "angular"
+    //   },
+    //   "problemMatcher": [
+    //     "$eslint-stylish"
+    //   ]
+    // },
+    // {
+    //   "label": "lint:fix",
+    //   "type": "shell",
+    //   "command": "pnpm",
+    //   "args": [
+    //     "exec",
+    //     "ng",
+    //     "lint",
+    //     "--fix"
+    //   ],
+    //   "group": "build",
+    //   "presentation": {
+    //     "reveal": "always",
+    //     "panel": "shared",
+    //     "group": "angular"
+    //   },
+    //   "problemMatcher": [
+    //     "$eslint-stylish"
+    //   ]
+    // },
     // ─── Generate ──────────────────────────────────────────────────
     {
       "label": "generate: component",
@@ -174,7 +174,8 @@
       "presentation": {
         "reveal": "always",
         "panel": "shared",
-        "group": "angular"
+        "group": "angular",
+        "close": true
       },
       "problemMatcher": []
     },
@@ -193,7 +194,8 @@
       "presentation": {
         "reveal": "always",
         "panel": "shared",
-        "group": "angular"
+        "group": "angular",
+        "close": true
       },
       "problemMatcher": []
     },
@@ -212,7 +214,8 @@
       "presentation": {
         "reveal": "always",
         "panel": "shared",
-        "group": "angular"
+        "group": "angular",
+        "close": true
       },
       "problemMatcher": []
     },
@@ -231,7 +234,8 @@
       "presentation": {
         "reveal": "always",
         "panel": "shared",
-        "group": "angular"
+        "group": "angular",
+        "close": true
       },
       "problemMatcher": []
     },
